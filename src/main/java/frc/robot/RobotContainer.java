@@ -15,14 +15,19 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.PhotonVision;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 import java.util.List;
 
 /*
@@ -37,13 +42,20 @@ public class RobotContainer {
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  ShuffleboardTab m_telopTab = Shuffleboard.getTab("Teleop");
+  
+  
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
-    //  configureButtonBindings();
+     configureButtonBindings();
+     m_telopTab.addDouble("DistanceFromRing", ()-> PhotonVision.getNotePidResponseVariable());
+     m_telopTab.addDouble("RingX", ()-> PhotonVision.getConvertedLastNotePosition()[0]);
+     m_telopTab.addDouble("RingY", ()-> PhotonVision.getConvertedLastNotePosition()[1]);
+     
 
     // Configure default commands
     // m_robotDrive.setDefaultCommand(
@@ -72,6 +84,8 @@ public class RobotContainer {
     //     .whileTrue(new RunCommand(
     //         () -> m_robotDrive.setX(),
     //         m_robotDrive));
+    //new Trigger(()-> true).whileTrue(new RunCommand(()-> System.out.println(PhotonVision.getNotePidResponseVariable())));
+    //new Trigger(()-> true).whileTrue(new RunCommand(()-> System.out.println("stuff")));
   }
 
   /**
