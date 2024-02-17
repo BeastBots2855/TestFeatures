@@ -14,7 +14,7 @@
         {
             "groupId": "org.photonvision",
             "artifactId": "photonlib-cpp",
-            "version": "v2024.2.4",
+            "version": "v2024.2.4", 
             "libName": "photonlib",
             "headerClassifier": "headers",
             "sharedLibrary": true,
